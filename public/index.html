@@ -1,8 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT18V331L5c0SUptpyL2-9nCgXiEQGwtzQMQg&usqp=CAU">
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT18V331L5c0SUptpyL2-9nCgXiEQGwtzQMQg&usqp=CAU"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -12,28 +16,48 @@
     <title>what-up-china</title>
     <script type="text/javascript">
       function googleTranslateElementInit() {
-        new google.translate.TranslateElement({pageLanguage: 'zh', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, multilanguagePage: true}, 'google_translate_element');
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "zh",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            multilanguagePage: true,
+          },
+          "google_translate_element",
+        );
       }
     </script>
 
     <script type="text/javascript">
       function openHowToEnableGoogleTranslate() {
-        window.open("https://support.google.com/chrome/answer/173424?co=GENIE.Platform%3DDesktop&hl=en");
+        window.open(
+          "https://support.google.com/chrome/answer/173424?co=GENIE.Platform%3DDesktop&hl=en",
+        );
       }
     </script>
 
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script type="text/javascript" src="//translate.google.com/#en/hi/Hello"></script>
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
+    <script
+      type="text/javascript"
+      src="//translate.google.com/#en/hi/Hello"
+    ></script>
     <!-- Hotjar Tracking Code for https://whatupchina.org/ -->
     <script>
-      (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:2403778,hjsv:6};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      (function (h, o, t, j, a, r) {
+        h.hj =
+          h.hj ||
+          function () {
+            (h.hj.q = h.hj.q || []).push(arguments);
+          };
+        h._hjSettings = { hjid: 2403778, hjsv: 6 };
+        a = o.getElementsByTagName("head")[0];
+        r = o.createElement("script");
+        r.async = 1;
+        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
         a.appendChild(r);
-      })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+      })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
     </script>
   </head>
   <body>
@@ -46,18 +70,49 @@
         </div>
       </div>
       <div id="buttonsTab">
-        <a onclick="openHowToEnableGoogleTranslate()">Enable google translate by default</a>
-        <br/><br/>
+        <a onclick="openHowToEnableGoogleTranslate()"
+          >Enable google translate by default</a
+        >
+        <br /><br />
         <div id="google_translate_element"></div>
-        <br>
+        <br />
         <div id="gh">
-          <a href="https://github.com/James-Sangalli/what-up-china" target="_blank">
-            <img alt="GitHub" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png" width="40" height="40"/>
+          <a
+            href="https://github.com/James-Sangalli/what-up-china"
+            target="_blank"
+          >
+            <img
+              alt="GitHub"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png"
+              width="40"
+              height="40"
+            />
           </a>
         </div>
-        <a href="#trendingBaidu" id="baiduNewsButton" class="btn btn-warning btn-lg active" role="button" aria-pressed="true">Hot News Baidu</a>
-        <a href="#trendingNews" id="trendingNewsButton" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Trending News</a>
-        <a href="#trendingBilibili" id="trendingBilibiliButton" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Trending on Bilibili</a>
+        <a
+          href="#trendingBaidu"
+          id="baiduNewsButton"
+          class="btn btn-warning btn-lg active"
+          role="button"
+          aria-pressed="true"
+          >Hot News Baidu</a
+        >
+        <a
+          href="#trendingNews"
+          id="trendingNewsButton"
+          class="btn btn-primary btn-lg active"
+          role="button"
+          aria-pressed="true"
+          >Trending News</a
+        >
+        <a
+          href="#trendingBilibili"
+          id="trendingBilibiliButton"
+          class="btn btn-danger btn-lg active"
+          role="button"
+          aria-pressed="true"
+          >Trending on Bilibili</a
+        >
       </div>
       <div id="root"></div>
     </div>

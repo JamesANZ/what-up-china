@@ -20,16 +20,16 @@
 }
 
 #description {
-  margin-left:5%;
-  margin-right:5%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 #results {
-  margin:5%;
+  margin: 5%;
 }
 
 body > .skiptranslate {
-//display: none;
+  //display: none;
 }
 
 .goog-te-banner-frame.skiptranslate {
@@ -40,5 +40,7 @@ body {
 }
 
 @media print {
-  #google_translate_element {display: none;}
+  #google_translate_element {
+    display: none;
+  }
 }
