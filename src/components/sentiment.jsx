@@ -26,15 +26,14 @@ class sentiment extends Component {
         this.setState({ sentiment: sentiment });
       }
     };
-    document
-      .getElementById("baiduNewsButton")
-      .addEventListener("click", sentimentCallback, false);
-    document
-      .getElementById("trendingNewsButton")
-      .addEventListener("click", sentimentCallback, false);
-    document
-      .getElementById("trendingBilibiliButton")
-      .addEventListener("click", sentimentCallback, false);
+    ["baiduNewsButton", "trendingNewsButton", "trendingBilibiliButton"].forEach(
+      (buttonId) => {
+        const target = document.getElementById(buttonId);
+        if (target) {
+          target.addEventListener("click", sentimentCallback, false);
+        }
+      },
+    );
   }
 
   handle() {

@@ -18,11 +18,11 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
+    "test": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts test",
     "test-helpers": "mocha --exit --recursive --timeout 500000 -r esm",
-    "eject": "react-scripts eject",
+    "eject": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
@@ -46,8 +46,12 @@
   },
   "devDependencies": {
     "chai": "^4.3.4",
+    "cross-env": "^7.0.3",
     "esm": "^3.2.25",
     "gh-pages": "^3.1.0",
     "mocha": "^8.3.2"
+  },
+  "overrides": {
+    "postcss-safe-parser": "6.0.0"
   }
 }

@@ -4,6 +4,7 @@ import API from "../helpers/API";
 class trendingBaidu extends Component {
   state = {
     hotNews: [],
+    isLoading: true,
   };
 
   constructor(props) {
@@ -14,30 +15,52 @@ class trendingBaidu extends Component {
 
   makeNewsDiv(article) {
     return (
-      <div>
-        <h2>
-          <a href={article.link}>{article.title}</a>
-        </h2>
-      </div>
+      <article className="card" key={article.link || article.title}>
+        <div className="card-meta">
+          <span className="badge">Baidu</span>
+          {article.hotScore && <span>{article.hotScore} heat</span>}
+        </div>
+        <h3 className="card-title">
+          <a href={article.link} target="_blank" rel="noreferrer">
+            {article.title}
+          </a>
+        </h3>
+        {article.summary && <p className="card-body">{article.summary}</p>}
+      </article>
     );
   }
 
   async componentDidMount() {
     try {
       const { error, data: hotNews } = await this.api.getBaiduHotNews();
-      if (!error) {
-        this.setState({ hotNews });
-      }
+      this.setState({
+        hotNews: error ? [] : hotNews,
+        isLoading: false,
+      });
     } catch (e) {
       console.error(e);
+      this.setState({ isLoading: false });
     }
   }
 
   render() {
+    const { hotNews, isLoading } = this.state;
+
+    if (isLoading) {
+      return (
+        <div className="panel-placeholder">Scanning Baidu search surges…</div>
+      );
+    }
+
+    if (!hotNews.length) {
+      return (
+        <div className="panel-placeholder">No Baidu trends available.</div>
+      );
+    }
+
     return (
-      <div>
-        <h3>{this.state.sentiment}</h3>
-        {this.state.hotNews.map((article) => {
+      <div className="card-grid">
+        {hotNews.map((article) => {
           return this.makeNewsDiv(article);
         })}
       </div>

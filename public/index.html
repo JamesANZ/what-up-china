@@ -14,35 +14,6 @@
       content="Find out what's going on in the Chinese web"
     />
     <title>what-up-china</title>
-    <script type="text/javascript">
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement(
-          {
-            pageLanguage: "zh",
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-            multilanguagePage: true,
-          },
-          "google_translate_element",
-        );
-      }
-    </script>
-
-    <script type="text/javascript">
-      function openHowToEnableGoogleTranslate() {
-        window.open(
-          "https://support.google.com/chrome/answer/173424?co=GENIE.Platform%3DDesktop&hl=en",
-        );
-      }
-    </script>
-
-    <script
-      type="text/javascript"
-      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-    ></script>
-    <script
-      type="text/javascript"
-      src="//translate.google.com/#en/hi/Hello"
-    ></script>
     <!-- Hotjar Tracking Code for https://whatupchina.org/ -->
     <script>
       (function (h, o, t, j, a, r) {
@@ -62,59 +33,44 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div>
-      <div class="jumbotron">
-        <div id="titles">
-          <h1>What up China!</h1>
-          <h3>See what's popular on the Chinese web</h3>
-        </div>
-      </div>
-      <div id="buttonsTab">
-        <a onclick="openHowToEnableGoogleTranslate()"
-          >Enable google translate by default</a
-        >
-        <br /><br />
-        <div id="google_translate_element"></div>
-        <br />
-        <div id="gh">
-          <a
-            href="https://github.com/James-Sangalli/what-up-china"
-            target="_blank"
-          >
-            <img
-              alt="GitHub"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png"
-              width="40"
-              height="40"
-            />
-          </a>
-        </div>
-        <a
-          href="#trendingBaidu"
-          id="baiduNewsButton"
-          class="btn btn-warning btn-lg active"
-          role="button"
-          aria-pressed="true"
-          >Hot News Baidu</a
-        >
-        <a
-          href="#trendingNews"
-          id="trendingNewsButton"
-          class="btn btn-primary btn-lg active"
-          role="button"
-          aria-pressed="true"
-          >Trending News</a
-        >
-        <a
-          href="#trendingBilibili"
-          id="trendingBilibiliButton"
-          class="btn btn-danger btn-lg active"
-          role="button"
-          aria-pressed="true"
-          >Trending on Bilibili</a
-        >
-      </div>
-      <div id="root"></div>
-    </div>
+    <div id="google_translate_element" style="display: none"></div>
+    <div id="root"></div>
+    <script type="text/javascript">
+      (function () {
+        const browserLanguage = (
+          navigator.language ||
+          navigator.userLanguage ||
+          "en"
+        ).toLowerCase();
+
+        function setPreferredLanguage() {
+          const combo = document.querySelector(".goog-te-combo");
+          if (!combo) {
+            return;
+          }
+          const normalized = browserLanguage.split("-")[0];
+          const options = Array.from(combo.options).map((opt) => opt.value);
+          if (options.includes(normalized) && combo.value !== normalized) {
+            combo.value = normalized;
+            combo.dispatchEvent(new Event("change"));
+          }
+        }
+
+        window.googleTranslateElementInit = function () {
+          new google.translate.TranslateElement(
+            {
+              pageLanguage: "zh",
+              autoDisplay: true,
+            },
+            "google_translate_element",
+          );
+          setTimeout(setPreferredLanguage, 0);
+        };
+      })();
+    </script>
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
   </body>
 </html>
