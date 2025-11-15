@@ -590,6 +590,33 @@ a:focus-visible {
   display: block;
 }
 
+.detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.detail-item dt {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.62rem;
+  color: rgba(247, 209, 185, 0.7);
+  margin: 0;
+}
+
+.detail-item dd {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
 .panel-placeholder {
   background: var(--surface-alt);
   border: 1px solid rgba(245, 193, 108, 0.18);

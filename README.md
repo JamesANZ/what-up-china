@@ -16,14 +16,14 @@ People outside China see the internet there through filters: language barriers, 
 
 ## Features
 
-| Section                 | Data source / behaviour                                                                                                                                             |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Baidu Search & Hot News** | Polls `top.baidu.com` and `news.baidu.com` on a schedule to surface real-time spike queries and editor-curated headlines.                                          |
-| **Toutiao Hot Board**       | Mirrors ByteDance’s mobile news leaderboard and distills each entry down to title, source, and heat so you can scan the feed in seconds.                            |
-| **Douban Film Pulse**       | Highlights the most talked-about films on Douban, complete with ratings and key quotes for quick cultural context.                                               |
-| **Bilibili Buzz**           | Pulls the current “hot list” of creators and videos from Bilibili to capture what’s resonating with younger audiences.                                           |
-| **Global Headlines**        | Reads from the `/top-news/` API to blend international coverage with mainland news into one cohesive feed of shareable cards.                                     |
-| **Sentiment Monitor**       | Reuses the global headline feed, runs the English snippets through `natural`, `stopword`, `apos-to-lex-form`, and AFINN, and visualises optimism vs. concern.     |
+| Section                     | Data source / behaviour                                                                                                                                       |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Baidu Search & Hot News** | Polls `top.baidu.com` and `news.baidu.com` on a schedule to surface real-time spike queries and editor-curated headlines.                                     |
+| **Toutiao Hot Board**       | Mirrors ByteDance’s mobile news leaderboard and distills each entry down to title, source, and heat so you can scan the feed in seconds.                      |
+| **Douban Film Pulse**       | Highlights the most talked-about films on Douban, complete with ratings and key quotes for quick cultural context.                                            |
+| **Bilibili Buzz**           | Pulls the current “hot list” of creators and videos from Bilibili to capture what’s resonating with younger audiences.                                        |
+| **Global Headlines**        | Reads from the `/top-news/` API to blend international coverage with mainland news into one cohesive feed of shareable cards.                                 |
+| **Sentiment Monitor**       | Reuses the global headline feed, runs the English snippets through `natural`, `stopword`, `apos-to-lex-form`, and AFINN, and visualises optimism vs. concern. |
 
 Every card uses the same responsive layout, accessible typography, and short copy so the Google‑Translate banner defined in `public/index.html` can translate the entire page on the fly.
 
@@ -33,13 +33,13 @@ Every card uses the same responsive layout, accessible typography, and short cop
 
 The React app talks to a companion backend (not included in this repo) that emits JSON arrays for each feed. The helper in `src/helpers/API.js` normalises common shapes so components always receive a simple array of items.
 
-| Endpoint              | Used by                 | Example payload (abridged)                                      |
-| --------------------- | ----------------------- | ---------------------------------------------------------------- |
-| `/baidu/hot-news/`    | `TrendingBaidu`         | `{ "data": [{ "title": "…", "link": "…", "heat": 123 }] }`       |
-| `/baidu/hot-search/`  | `TrendingBaidu`         | `{ "data": [{ "keyword": "…", "score": 98, "url": "…" }] }`      |
-| `/toutiao/hot-board/` | `TrendingToutiao`      | `{ "data": [{ "title": "…", "source": "…", "hotValue": 100 }] }` |
-| `/douban/hot-movies/` | `TrendingDouban`        | `{ "data": [{ "name": "…", "rating": 8.6, "quote": "…" }] }`     |
-| `/bilibili/trending/` | `TrendingBilibili`      | `{ "data": [{ "title": "…", "author": "…", "plays": 540000 }] }` |
+| Endpoint              | Used by                   | Example payload (abridged)                                           |
+| --------------------- | ------------------------- | -------------------------------------------------------------------- |
+| `/baidu/hot-news/`    | `TrendingBaidu`           | `{ "data": [{ "title": "…", "link": "…", "heat": 123 }] }`           |
+| `/baidu/hot-search/`  | `TrendingBaidu`           | `{ "data": [{ "keyword": "…", "score": 98, "url": "…" }] }`          |
+| `/toutiao/hot-board/` | `TrendingToutiao`         | `{ "data": [{ "title": "…", "source": "…", "hotValue": 100 }] }`     |
+| `/douban/hot-movies/` | `TrendingDouban`          | `{ "data": [{ "name": "…", "rating": 8.6, "quote": "…" }] }`         |
+| `/bilibili/trending/` | `TrendingBilibili`        | `{ "data": [{ "title": "…", "author": "…", "plays": 540000 }] }`     |
 | `/top-news/`          | `TrendingNews`, Sentiment | `{ "articles": [{ "title": "…", "description": "…", "url": "…" }] }` |
 
 > **Heads-up:** The Global Headlines section and the Sentiment Monitor both depend on `/top-news/`. If that endpoint is unreachable (for example, because `REACT_APP_API_ROOT` still points at `http://localhost:3000` in production) those panels will display empty-state messaging.
@@ -81,9 +81,9 @@ The dev server runs at `http://localhost:3000`. Create React App handles hot rel
 
 ## Configuration
 
-| Variable              | Default        | Purpose                                                                                                     |
-| --------------------- | -------------- | ----------------------------------------------------------------------------------------------------------- |
-| `REACT_APP_API_ROOT`  | `""` (empty)   | Base URL for the backing API. Leave empty when the API is served from the same origin, set to `http://localhost:3000` for local proxies, or to your hosted backend (e.g. `https://api.whatupchina.org`) before running `npm run build`. |
+| Variable             | Default      | Purpose                                                                                                                                                                                                                                 |
+| -------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `REACT_APP_API_ROOT` | `""` (empty) | Base URL for the backing API. Leave empty when the API is served from the same origin, set to `http://localhost:3000` for local proxies, or to your hosted backend (e.g. `https://api.whatupchina.org`) before running `npm run build`. |
 
 If this variable is missing or incorrect, `/top-news/` will resolve to `http://localhost:3000/top-news/` in end users’ browsers and both the Global Headlines + Sentiment feeds will render “No data”.
 
