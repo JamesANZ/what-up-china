@@ -6,6 +6,7 @@ class trendingNews extends Component {
     articles: [],
     isLoading: true,
   };
+  _isMounted = false;
 
   constructor(props) {
     super(props);
@@ -14,17 +15,25 @@ class trendingNews extends Component {
   }
 
   async componentDidMount() {
+    this._isMounted = true;
     try {
       const { error, data: articles } = await this.api.getTopNews();
-      console.error(error);
-      this.setState({
-        articles: error ? [] : articles,
-        isLoading: false,
-      });
+      if (this._isMounted) {
+        this.setState({
+          articles: error ? [] : articles,
+          isLoading: false,
+        });
+      }
     } catch (e) {
-      this.setState({ isLoading: false });
       console.error(e);
+      if (this._isMounted) {
+        this.setState({ isLoading: false });
+      }
     }
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   makeArticleDiv(article) {
@@ -51,7 +60,14 @@ class trendingNews extends Component {
         )}
         {cleanedImg && (
           <div className="card-media">
-            <img src={cleanedImg} alt={article.title} loading="lazy" />
+            <img
+              src={cleanedImg}
+              alt={article.title}
+              loading="lazy"
+              onError={(evt) => {
+                evt.target.style.display = "none";
+              }}
+            />
           </div>
         )}
       </article>

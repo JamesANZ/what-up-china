@@ -1,26 +1,25 @@
 import React, { Component } from "react";
 import API from "../helpers/API";
 
-class trendingBilibili extends Component {
+class TrendingDouban extends Component {
   state = {
-    trends: [],
+    films: [],
     isLoading: true,
   };
   _isMounted = false;
 
   constructor(props) {
     super(props);
-    this.props = props;
     this.api = new API();
   }
 
   async componentDidMount() {
     this._isMounted = true;
     try {
-      const { error, data: trends } = await this.api.getTrendingOnBilibili();
+      const { error, data } = await this.api.getDoubanHotMovies();
       if (this._isMounted) {
         this.setState({
-          trends: error ? [] : trends,
+          films: error ? [] : data.slice(0, 12),
           isLoading: false,
         });
       }
@@ -36,30 +35,23 @@ class trendingBilibili extends Component {
     this._isMounted = false;
   }
 
-  makeTrendDiv(trend) {
-    const cleanedImg =
-      trend.pic &&
-      `https://${trend.pic.replace("http://", "").replace("https://", "")}`;
-
-    const viewLabel = trend.play ? trend.play : null;
-
+  renderCard(movie) {
     return (
-      <article className="card" key={trend.short_link || trend.title}>
+      <article className="card" key={movie.id || movie.title}>
         <div className="card-meta">
-          <span className="badge">Bilibili</span>
-          {viewLabel && <span>{viewLabel} views</span>}
+          <span className="badge">Douban</span>
+          {movie.rating && <span>{movie.rating.toFixed(1)}/10</span>}
         </div>
         <h3 className="card-title">
-          <a href={trend.short_link} target="_blank" rel="noreferrer">
-            {trend.title}
+          <a href={movie.url} target="_blank" rel="noreferrer">
+            {movie.title}
           </a>
         </h3>
-        {trend.desc && <p className="card-body">{trend.desc}</p>}
-        {cleanedImg && (
+        {movie.cover && (
           <div className="card-media">
             <img
-              src={cleanedImg}
-              alt={trend.title}
+              src={movie.cover}
+              alt={movie.title}
               loading="lazy"
               onError={(evt) => {
                 evt.target.style.display = "none";
@@ -67,37 +59,39 @@ class trendingBilibili extends Component {
             />
           </div>
         )}
+        {movie.isNew && (
+          <span className="badge" style={{ alignSelf: "flex-start" }}>
+            New
+          </span>
+        )}
       </article>
     );
   }
 
   render() {
-    const { trends, isLoading } = this.state;
+    const { films, isLoading } = this.state;
 
     if (isLoading) {
       return (
-        <div className="panel-placeholder">
-          Pulling the latest Bilibili buzz…
-        </div>
+        <div className="panel-placeholder">Fetching Douban box office…</div>
       );
     }
 
-    if (!trends.length) {
+    if (!films.length) {
       return (
         <div className="panel-placeholder">
-          No trending Bilibili topics right now.
+          No Douban highlights available.
         </div>
       );
     }
 
     return (
       <div className="card-grid">
-        {trends.map((trend) => {
-          return this.makeTrendDiv(trend);
-        })}
+        {films.map((movie) => this.renderCard(movie))}
       </div>
     );
   }
 }
 
-export default trendingBilibili;
+export default TrendingDouban;
+

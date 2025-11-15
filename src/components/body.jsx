@@ -3,10 +3,22 @@ import "../App.css";
 import TrendingNews from "./trending-news";
 import TrendingBilibili from "./trending-bilibili";
 import TrendingBaidu from "./trending-baidu";
+import TrendingToutiao from "./trending-toutiao";
+import TrendingDouban from "./trending-douban";
 import Sentiment from "./sentiment";
 
 const quickLinks = [
   { href: "#trendingBaidu", label: "Baidu Pulse", id: "baiduNewsButton" },
+  {
+    href: "#toutiaoBoard",
+    label: "Toutiao Radar",
+    id: "toutiaoButton",
+  },
+  {
+    href: "#doubanHeat",
+    label: "Cinema Heat",
+    id: "doubanButton",
+  },
   {
     href: "#trendingNews",
     label: "Global Headlines",
@@ -88,7 +100,7 @@ const Body = () => {
           <div className="section-head">
             <div>
               <p className="eyebrow">Search radar</p>
-              <h2>Hot on Baidu</h2>
+              <h2>Baidu Search & Dispatch</h2>
             </div>
             <a
               className="section-link"
@@ -100,10 +112,54 @@ const Body = () => {
             </a>
           </div>
           <p className="section-description">
-            Real-time search surges from the world&apos;s largest Chinese search
-            engine.
+            Real-time surges directly from Baidu&apos;s hot search board plus the
+            manually curated hot list from news.baidu.com.
           </p>
           <TrendingBaidu />
+        </section>
+
+        <section id="toutiaoBoard" className="section-card">
+          <div className="section-head">
+            <div>
+              <p className="eyebrow">Mobile news</p>
+              <h2>Toutiao Hot Board</h2>
+            </div>
+            <a
+              className="section-link"
+              href="https://www.toutiao.com/trending/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View feed →
+            </a>
+          </div>
+          <p className="section-description">
+            ByteDance&apos;s Toutiao surfaces nationally trending stories and
+            conversations watched by hundreds of millions of readers.
+          </p>
+          <TrendingToutiao />
+        </section>
+
+        <section id="doubanHeat" className="section-card">
+          <div className="section-head">
+            <div>
+              <p className="eyebrow">Cinema heat</p>
+              <h2>Douban Film Pulse</h2>
+            </div>
+            <a
+              className="section-link"
+              href="https://movie.douban.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Explore movies →
+            </a>
+          </div>
+          <p className="section-description">
+            Live snapshot of the most discussed films on Douban, China&apos;s
+            definitive taste graph for cinema.
+          </p>
+          <TrendingDouban />
         </section>
 
         <section id="trendingNews" className="section-card">

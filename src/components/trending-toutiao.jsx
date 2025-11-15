@@ -1,26 +1,25 @@
 import React, { Component } from "react";
 import API from "../helpers/API";
 
-class trendingBilibili extends Component {
+class TrendingToutiao extends Component {
   state = {
-    trends: [],
+    stories: [],
     isLoading: true,
   };
   _isMounted = false;
 
   constructor(props) {
     super(props);
-    this.props = props;
     this.api = new API();
   }
 
   async componentDidMount() {
     this._isMounted = true;
     try {
-      const { error, data: trends } = await this.api.getTrendingOnBilibili();
+      const { error, data } = await this.api.getToutiaoHotBoard();
       if (this._isMounted) {
         this.setState({
-          trends: error ? [] : trends,
+          stories: error ? [] : data.slice(0, 12),
           isLoading: false,
         });
       }
@@ -36,30 +35,26 @@ class trendingBilibili extends Component {
     this._isMounted = false;
   }
 
-  makeTrendDiv(trend) {
-    const cleanedImg =
-      trend.pic &&
-      `https://${trend.pic.replace("http://", "").replace("https://", "")}`;
-
-    const viewLabel = trend.play ? trend.play : null;
-
+  renderCard(item) {
     return (
-      <article className="card" key={trend.short_link || trend.title}>
+      <article className="card" key={item.url || item.title}>
         <div className="card-meta">
-          <span className="badge">Bilibili</span>
-          {viewLabel && <span>{viewLabel} views</span>}
+          <span className="badge">{item.label || "Toutiao"}</span>
+          {item.hotValue && (
+            <span>{Number(item.hotValue).toLocaleString()} heat</span>
+          )}
         </div>
         <h3 className="card-title">
-          <a href={trend.short_link} target="_blank" rel="noreferrer">
-            {trend.title}
+          <a href={item.url} target="_blank" rel="noreferrer">
+            {item.title}
           </a>
         </h3>
-        {trend.desc && <p className="card-body">{trend.desc}</p>}
-        {cleanedImg && (
+        {item.query && <p className="card-body">{item.query}</p>}
+        {item.image && (
           <div className="card-media">
             <img
-              src={cleanedImg}
-              alt={trend.title}
+              src={item.image}
+              alt={item.title}
               loading="lazy"
               onError={(evt) => {
                 evt.target.style.display = "none";
@@ -72,32 +67,31 @@ class trendingBilibili extends Component {
   }
 
   render() {
-    const { trends, isLoading } = this.state;
+    const { stories, isLoading } = this.state;
 
     if (isLoading) {
       return (
         <div className="panel-placeholder">
-          Pulling the latest Bilibili buzz…
+          Pulling Toutiao&apos;s hot board…
         </div>
       );
     }
 
-    if (!trends.length) {
+    if (!stories.length) {
       return (
         <div className="panel-placeholder">
-          No trending Bilibili topics right now.
+          No Toutiao topics are available right now.
         </div>
       );
     }
 
     return (
       <div className="card-grid">
-        {trends.map((trend) => {
-          return this.makeTrendDiv(trend);
-        })}
+        {stories.map((item) => this.renderCard(item))}
       </div>
     );
   }
 }
 
-export default trendingBilibili;
+export default TrendingToutiao;
+

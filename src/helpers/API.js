@@ -5,37 +5,41 @@ import SW from "stopword";
 const { WordTokenizer } = natural;
 const tokenizer = new WordTokenizer();
 
+const API_ROOT =
+  process.env.REACT_APP_API_ROOT || "http://localhost:3000";
+
+async function getJson(path) {
+  try {
+    const result = await request.get(`${API_ROOT}${path}`);
+    return { data: JSON.parse(result.text) };
+  } catch (error) {
+    return { error };
+  }
+}
+
 class API {
-  async getTopNews() {
-    try {
-      const query = "https://what-up-china-server.herokuapp.com/top-news/";
-      const result = await request.get(query);
-      return { data: JSON.parse(result.text) };
-    } catch (error) {
-      return { error };
-    }
+  getTopNews() {
+    return getJson("/top-news/");
   }
 
-  async getTrendingOnBilibili() {
-    try {
-      const query =
-        "https://what-up-china-server.herokuapp.com/bilibili/trending/";
-      const result = await request.get(query);
-      return { data: JSON.parse(result.text) };
-    } catch (error) {
-      return { error };
-    }
+  getTrendingOnBilibili() {
+    return getJson("/bilibili/trending/");
   }
 
-  async getBaiduHotNews() {
-    try {
-      const query =
-        "https://what-up-china-server.herokuapp.com/baidu/hot-news/";
-      const result = await request.get(query);
-      return { data: JSON.parse(result.text) };
-    } catch (error) {
-      return { error };
-    }
+  getBaiduHotNews() {
+    return getJson("/baidu/hot-news/");
+  }
+
+  getBaiduHotSearch() {
+    return getJson("/baidu/hot-search/");
+  }
+
+  getToutiaoHotBoard() {
+    return getJson("/toutiao/hot-board/");
+  }
+
+  getDoubanHotMovies() {
+    return getJson("/douban/hot-movies/");
   }
 
   getTextSentiment(text, lang) {
