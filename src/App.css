@@ -43,6 +43,8 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   letter-spacing: -0.005em;
+  color-scheme: dark;
+  scroll-behavior: smooth;
 }
 
 body::before {
@@ -85,6 +87,11 @@ body::after {
 a {
   color: inherit;
   text-decoration-thickness: 1px;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
 }
 
 .app-shell {
@@ -258,6 +265,7 @@ a {
   margin: 0.4rem 0 1rem;
   position: relative;
   z-index: 1;
+  text-wrap: balance;
 }
 
 .hero-title-row {
@@ -376,6 +384,9 @@ a {
   box-shadow: var(--card-shadow);
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
 .section-card::before {
@@ -410,6 +421,7 @@ a {
   font-family: "Space Grotesk", "Inter", sans-serif;
   margin: 0;
   font-size: 1.85rem;
+  text-wrap: balance;
 }
 
 .section-link {
@@ -428,6 +440,7 @@ a {
   display: grid;
   gap: 1.5rem;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-items: stretch;
 }
 
 .dual-grid {
@@ -455,6 +468,7 @@ a {
   min-height: 180px;
   position: relative;
   line-height: 1.7;
+  isolation: isolate;
 }
 
 .card::before {
@@ -494,6 +508,7 @@ a {
   margin: 0;
   font-size: 1.1rem;
   line-height: 1.5;
+  text-wrap: balance;
 }
 
 .card-title a {
@@ -509,12 +524,65 @@ a {
   margin: 0;
   color: var(--text-muted);
   max-width: 65ch;
+  text-align: left;
 }
 
 .card-media {
   border-radius: 12px;
   overflow: hidden;
   margin-top: 0.35rem;
+}
+
+.card-subtitle {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.chip {
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  background: rgba(245, 193, 108, 0.12);
+  border: 1px solid rgba(245, 193, 108, 0.25);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.chip--outline {
+  background: transparent;
+  border-color: rgba(245, 193, 108, 0.4);
+}
+
+.card-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-top: auto;
+}
+
+.card-stat {
+  min-width: 90px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.card-stat strong {
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.card-stat-label {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.65rem;
+  color: rgba(247, 209, 185, 0.7);
 }
 
 .card-media img {
@@ -577,6 +645,7 @@ a {
 
   .section-card {
     padding: 1.5rem;
+    gap: 1rem;
   }
 
   body {
