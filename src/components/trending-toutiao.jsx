@@ -94,4 +94,3 @@ class TrendingToutiao extends Component {
 }
 
 export default TrendingToutiao;
-

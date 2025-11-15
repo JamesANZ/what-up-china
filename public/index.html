@@ -2,11 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link
-      rel="icon"
-      type="image/png"
-      href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT18V331L5c0SUptpyL2-9nCgXiEQGwtzQMQg&usqp=CAU"
-    />
+    <link rel="icon" type="image/svg+xml" href="%PUBLIC_URL%/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -37,23 +33,45 @@
     <div id="root"></div>
     <script type="text/javascript">
       (function () {
+        const STORAGE_KEY = "whatupchina-preferred-lang";
         const browserLanguage = (
+          localStorage.getItem(STORAGE_KEY) ||
           navigator.language ||
           navigator.userLanguage ||
           "en"
-        ).toLowerCase();
+        )
+          .toLowerCase()
+          .split("-")[0];
 
-        function setPreferredLanguage() {
-          const combo = document.querySelector(".goog-te-combo");
+        function applyLanguage(combo, language) {
           if (!combo) {
             return;
           }
-          const normalized = browserLanguage.split("-")[0];
-          const options = Array.from(combo.options).map((opt) => opt.value);
-          if (options.includes(normalized) && combo.value !== normalized) {
-            combo.value = normalized;
+          const validOptions = Array.from(combo.options).map(
+            (opt) => opt.value,
+          );
+          if (!validOptions.includes(language)) {
+            return;
+          }
+          if (combo.value !== language) {
+            combo.value = language;
             combo.dispatchEvent(new Event("change"));
           }
+        }
+
+        function setPreferredLanguage(attempts = 25) {
+          const combo = document.querySelector(".goog-te-combo");
+          if (!combo) {
+            if (attempts <= 0) {
+              return;
+            }
+            setTimeout(() => setPreferredLanguage(attempts - 1), 400);
+            return;
+          }
+          applyLanguage(combo, browserLanguage || "en");
+          combo.addEventListener("change", (event) => {
+            localStorage.setItem(STORAGE_KEY, event.target.value);
+          });
         }
 
         window.googleTranslateElementInit = function () {
@@ -64,13 +82,29 @@
             },
             "google_translate_element",
           );
-          setTimeout(setPreferredLanguage, 0);
+          setPreferredLanguage();
         };
+
+        function injectTranslateScript() {
+          if (document.getElementById("google-translate-script")) {
+            return;
+          }
+          const script = document.createElement("script");
+          script.id = "google-translate-script";
+          script.type = "text/javascript";
+          script.async = true;
+          script.src =
+            "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+          script.referrerPolicy = "no-referrer-when-downgrade";
+          document.body.appendChild(script);
+        }
+
+        if (document.readyState === "complete") {
+          injectTranslateScript();
+        } else {
+          window.addEventListener("load", injectTranslateScript);
+        }
       })();
     </script>
-    <script
-      type="text/javascript"
-      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-    ></script>
   </body>
 </html>

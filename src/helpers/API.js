@@ -5,8 +5,7 @@ import SW from "stopword";
 const { WordTokenizer } = natural;
 const tokenizer = new WordTokenizer();
 
-const API_ROOT =
-  process.env.REACT_APP_API_ROOT || "http://localhost:3000";
+const API_ROOT = process.env.REACT_APP_API_ROOT || "http://localhost:3000";
 
 async function getJson(path) {
   try {
@@ -17,9 +16,34 @@ async function getJson(path) {
   }
 }
 
+const articleKeys = ["articles", "news", "data", "results", "items", "top"];
+
+function normalizeArticles(payload) {
+  if (!payload) {
+    return [];
+  }
+
+  if (Array.isArray(payload)) {
+    return payload;
+  }
+
+  for (const key of articleKeys) {
+    const value = payload[key];
+    if (Array.isArray(value)) {
+      return value;
+    }
+  }
+
+  return [];
+}
+
 class API {
-  getTopNews() {
-    return getJson("/top-news/");
+  async getTopNews() {
+    const { error, data } = await getJson("/top-news/");
+    if (error) {
+      return { error };
+    }
+    return { data: normalizeArticles(data) };
   }
 
   getTrendingOnBilibili() {

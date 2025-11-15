@@ -1,17 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500;600&display=swap");
 
 :root {
-  --bg: #090101;
-  --bg-alt: #140303;
-  --surface: #1b0505;
-  --surface-alt: #220707;
-  --surface-muted: #321010;
-  --accent: #f75c40;
-  --accent-soft: rgba(247, 92, 64, 0.15);
-  --gold: #f5c16c;
-  --text: #ffeede;
-  --text-muted: #e7bba0;
-  --card-shadow: 0 25px 45px rgba(0, 0, 0, 0.55);
+  --bg: #05070d;
+  --bg-alt: #090d17;
+  --surface: rgba(23, 6, 6, 0.92);
+  --surface-alt: rgba(30, 9, 9, 0.95);
+  --surface-muted: rgba(49, 16, 16, 0.85);
+  --surface-glass: rgba(16, 5, 5, 0.72);
+  --accent: #f65b3c;
+  --accent-soft: rgba(246, 91, 60, 0.18);
+  --gold: #f7c97a;
+  --text: #fff9f4;
+  --text-muted: rgba(247, 209, 185, 0.92);
+  --card-shadow: 0 30px 60px rgba(0, 0, 0, 0.55);
 }
 
 *,
@@ -28,16 +29,20 @@ body {
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
+  font-size: clamp(15px, 1vw, 17px);
   background: linear-gradient(
     160deg,
     var(--bg) 0%,
-    #120606 45%,
+    #0a0d17 45%,
     var(--bg-alt) 100%
   );
   color: var(--text);
   min-height: 100vh;
-  line-height: 1.6;
+  line-height: 1.75;
   position: relative;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.005em;
 }
 
 body::before {
@@ -79,11 +84,12 @@ body::after {
 
 a {
   color: inherit;
+  text-decoration-thickness: 1px;
 }
 
 .app-shell {
   min-height: 100vh;
-  padding: 2.5rem 1.25rem 4rem;
+  padding: 2.5rem 1.5rem 4rem;
 }
 
 .page {
@@ -108,10 +114,10 @@ a {
 
 .hero {
   background:
-    linear-gradient(120deg, rgba(247, 92, 64, 0.25), rgba(21, 2, 2, 0.9)),
+    linear-gradient(120deg, rgba(247, 92, 64, 0.2), rgba(10, 12, 23, 0.9)),
     radial-gradient(
       circle at 15% 20%,
-      rgba(245, 193, 108, 0.35),
+      rgba(245, 193, 108, 0.28),
       transparent 60%
     );
   border: 1px solid rgba(245, 193, 108, 0.35);
@@ -286,7 +292,7 @@ a {
 
 .hero-summary {
   margin: 0;
-  max-width: 620px;
+  max-width: 60ch;
   color: var(--text-muted);
   position: relative;
   z-index: 1;
@@ -359,7 +365,7 @@ a {
 
 .sections-grid {
   display: grid;
-  gap: 1.75rem;
+  gap: 2rem;
 }
 
 .section-card {
@@ -415,11 +421,12 @@ a {
 .section-description {
   margin: 0.5rem 0 1.5rem;
   color: var(--text-muted);
+  max-width: 62ch;
 }
 
 .card-grid {
   display: grid;
-  gap: 1.25rem;
+  gap: 1.5rem;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
@@ -438,7 +445,7 @@ a {
 }
 
 .card {
-  background: var(--surface-alt);
+  background: var(--surface-glass);
   border-radius: 18px;
   padding: 1.35rem;
   border: 1px solid rgba(245, 193, 108, 0.05);
@@ -447,6 +454,7 @@ a {
   gap: 0.65rem;
   min-height: 180px;
   position: relative;
+  line-height: 1.7;
 }
 
 .card::before {
@@ -455,6 +463,13 @@ a {
   inset: 0;
   border-top: 2px solid rgba(245, 193, 108, 0.25);
   pointer-events: none;
+}
+
+@supports (backdrop-filter: blur(8px)) {
+  .card {
+    backdrop-filter: blur(18px);
+    background: rgba(16, 5, 5, 0.65);
+  }
 }
 
 .card-meta {
@@ -478,6 +493,7 @@ a {
 .card-title {
   margin: 0;
   font-size: 1.1rem;
+  line-height: 1.5;
 }
 
 .card-title a {
@@ -492,6 +508,7 @@ a {
 .card-body {
   margin: 0;
   color: var(--text-muted);
+  max-width: 65ch;
 }
 
 .card-media {
@@ -507,9 +524,9 @@ a {
 
 .panel-placeholder {
   background: var(--surface-alt);
-  border: 1px dashed rgba(245, 193, 108, 0.2);
+  border: 1px solid rgba(245, 193, 108, 0.18);
   border-radius: 16px;
-  padding: 1.25rem;
+  padding: 1.35rem;
   color: var(--text-muted);
   text-align: center;
   position: relative;
@@ -560,5 +577,19 @@ a {
 
   .section-card {
     padding: 1.5rem;
+  }
+
+  body {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

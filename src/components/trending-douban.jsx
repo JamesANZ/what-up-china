@@ -79,9 +79,7 @@ class TrendingDouban extends Component {
 
     if (!films.length) {
       return (
-        <div className="panel-placeholder">
-          No Douban highlights available.
-        </div>
+        <div className="panel-placeholder">No Douban highlights available.</div>
       );
     }
 
@@ -94,4 +92,3 @@ class TrendingDouban extends Component {
 }
 
 export default TrendingDouban;
-

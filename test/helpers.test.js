@@ -7,7 +7,7 @@ describe("API helper tests", () => {
   });
 
   it("can get the top news in China", async () => {
-    const latestNews = await this.api.getTopNews();
+    const { data: latestNews } = await this.api.getTopNews();
     expect(latestNews.length).to.not.equal(
       0,
       "should return at least one article",

@@ -20,7 +20,7 @@ class trendingNews extends Component {
       const { error, data: articles } = await this.api.getTopNews();
       if (this._isMounted) {
         this.setState({
-          articles: error ? [] : articles,
+          articles: error || !Array.isArray(articles) ? [] : articles,
           isLoading: false,
         });
       }

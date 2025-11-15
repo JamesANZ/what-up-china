@@ -18,11 +18,13 @@ class trendingBaidu extends Component {
   async componentDidMount() {
     this._isMounted = true;
     try {
-      const [{ error: hotNewsError, data: hotNews }, { error: hotSearchError, data: hotSearches }] =
-        await Promise.all([
-          this.api.getBaiduHotNews(),
-          this.api.getBaiduHotSearch(),
-        ]);
+      const [
+        { error: hotNewsError, data: hotNews },
+        { error: hotSearchError, data: hotSearches },
+      ] = await Promise.all([
+        this.api.getBaiduHotNews(),
+        this.api.getBaiduHotSearch(),
+      ]);
 
       if (this._isMounted) {
         this.setState({

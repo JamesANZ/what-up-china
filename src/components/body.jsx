@@ -112,8 +112,8 @@ const Body = () => {
             </a>
           </div>
           <p className="section-description">
-            Real-time surges directly from Baidu&apos;s hot search board plus the
-            manually curated hot list from news.baidu.com.
+            Real-time surges directly from Baidu&apos;s hot search board plus
+            the manually curated hot list from news.baidu.com.
           </p>
           <TrendingBaidu />
         </section>
