@@ -1,6 +1,6 @@
 # what-up-china
 
-Live cultural radar for mainland China: one place to skim Baidu surges, Toutiao briefs, Douban chatter, Bilibili buzz, curated global headlines, and a sentiment pulse powered by keyword analysis.
+Live cultural radar for mainland China: one place to skim Baidu surges, Toutiao briefs, Douban chatter, Bilibili buzz, curated global headlines, and a sentiment pulse powered by keyword analysis. The interface ships with a custom Space Grotesk + Inter theme, glassmorphism cards, a bespoke SVG favicon, and a built-in Google‑Translate banner so the copy stays readable worldwide.
 
 ---
 
@@ -16,16 +16,33 @@ People outside China see the internet there through filters: language barriers, 
 
 ## Features
 
-| Section                 | Data source / behaviour                                                        |
-| ----------------------- | ------------------------------------------------------------------------------ |
-| Baidu Search & Hot News | Crawls `top.baidu.com` and `news.baidu.com` for real-time surges.              |
-| Toutiao Hot Board       | Mirrors ByteDance’s mobile news leaderboard.                                   |
-| Douban Film Pulse       | Highlights most discussed cinema threads.                                      |
-| Global Headlines        | Curated feeds across international and Mainland desks.                         |
-| Bilibili Buzz           | Trending videos/creators from the Bilibili front page.                         |
-| Sentiment Monitor       | Local sentiment analyzer (`natural` + AFINN) scoring recent English headlines. |
+| Section                 | Data source / behaviour                                                                                                                                             |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Baidu Search & Hot News** | Polls `top.baidu.com` and `news.baidu.com` on a schedule to surface real-time spike queries and editor-curated headlines.                                          |
+| **Toutiao Hot Board**       | Mirrors ByteDance’s mobile news leaderboard and distills each entry down to title, source, and heat so you can scan the feed in seconds.                            |
+| **Douban Film Pulse**       | Highlights the most talked-about films on Douban, complete with ratings and key quotes for quick cultural context.                                               |
+| **Bilibili Buzz**           | Pulls the current “hot list” of creators and videos from Bilibili to capture what’s resonating with younger audiences.                                           |
+| **Global Headlines**        | Reads from the `/top-news/` API to blend international coverage with mainland news into one cohesive feed of shareable cards.                                     |
+| **Sentiment Monitor**       | Reuses the global headline feed, runs the English snippets through `natural`, `stopword`, `apos-to-lex-form`, and AFINN, and visualises optimism vs. concern.     |
 
-All sections share the same visual system: responsive cards, accessible typography, and copy that is short enough for auto-translation widgets (Google Translate is bootstrapped via `public/index.html`).
+Every card uses the same responsive layout, accessible typography, and short copy so the Google‑Translate banner defined in `public/index.html` can translate the entire page on the fly.
+
+---
+
+## Live data & API contract
+
+The React app talks to a companion backend (not included in this repo) that emits JSON arrays for each feed. The helper in `src/helpers/API.js` normalises common shapes so components always receive a simple array of items.
+
+| Endpoint              | Used by                 | Example payload (abridged)                                      |
+| --------------------- | ----------------------- | ---------------------------------------------------------------- |
+| `/baidu/hot-news/`    | `TrendingBaidu`         | `{ "data": [{ "title": "…", "link": "…", "heat": 123 }] }`       |
+| `/baidu/hot-search/`  | `TrendingBaidu`         | `{ "data": [{ "keyword": "…", "score": 98, "url": "…" }] }`      |
+| `/toutiao/hot-board/` | `TrendingToutiao`      | `{ "data": [{ "title": "…", "source": "…", "hotValue": 100 }] }` |
+| `/douban/hot-movies/` | `TrendingDouban`        | `{ "data": [{ "name": "…", "rating": 8.6, "quote": "…" }] }`     |
+| `/bilibili/trending/` | `TrendingBilibili`      | `{ "data": [{ "title": "…", "author": "…", "plays": 540000 }] }` |
+| `/top-news/`          | `TrendingNews`, Sentiment | `{ "articles": [{ "title": "…", "description": "…", "url": "…" }] }` |
+
+> **Heads-up:** The Global Headlines section and the Sentiment Monitor both depend on `/top-news/`. If that endpoint is unreachable (for example, because `REACT_APP_API_ROOT` still points at `http://localhost:3000` in production) those panels will display empty-state messaging.
 
 ---
 
@@ -62,9 +79,24 @@ The dev server runs at `http://localhost:3000`. Create React App handles hot rel
 
 ---
 
+## Configuration
+
+| Variable              | Default        | Purpose                                                                                                     |
+| --------------------- | -------------- | ----------------------------------------------------------------------------------------------------------- |
+| `REACT_APP_API_ROOT`  | `""` (empty)   | Base URL for the backing API. Leave empty when the API is served from the same origin, set to `http://localhost:3000` for local proxies, or to your hosted backend (e.g. `https://api.whatupchina.org`) before running `npm run build`. |
+
+If this variable is missing or incorrect, `/top-news/` will resolve to `http://localhost:3000/top-news/` in end users’ browsers and both the Global Headlines + Sentiment feeds will render “No data”.
+
+Other assets worth customising:
+
+- `public/favicon.svg` – the skyline/lantern icon used across the site.
+- `public/index.html` – houses the Google‑Translate snippet and Hotjar tracking block.
+
+---
+
 ## Deployment notes
 
-- The live site is hosted at [https://whatupchina.org](https://whatupchina.org) and references `%PUBLIC_URL%` for assets like the custom favicon.
+- The live site is hosted at [https://whatupchina.org](https://whatupchina.org) and references `%PUBLIC_URL%` for assets such as the custom favicon.
 - If you fork + redeploy, update the `homepage` field in `package.json` so CRA emits the right asset paths.
 
 ---
